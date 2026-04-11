@@ -3,17 +3,10 @@ RewriteEngine on
 
 # JSON-LD content negotiation: SN-xxx -> passports/SN-xxx.jsonld
 RewriteCond %{HTTP_ACCEPT} application/ld\+json
-RewriteRule ^(SN-[0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$1.jsonld [R=303,L]
+RewriteRule ^(SN-[A-Z0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$1.jsonld [R=303,L]
 
 # HTML: SN-xxx -> passports/SN-xxx.html
-RewriteRule ^(SN-[0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$1.html [R=303,L]
-
-# JSON-LD: SEG-xxx -> passports/SEG-xxx.jsonld  (V2 QR-Labels)
-RewriteCond %{HTTP_ACCEPT} application/ld\+json
-RewriteRule ^(SEG-[0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$1.jsonld [R=303,L]
-
-# HTML: SEG-xxx -> passports/SEG-xxx.html  (V2 QR-Labels)
-RewriteRule ^(SEG-[0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$1.html [R=303,L]
+RewriteRule ^(SN-[A-Z0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$1.html [R=303,L]
 
 # JSON-LD content negotiation: LOT-xxx -> batch/LOT-xxx.jsonld
 RewriteCond %{HTTP_ACCEPT} application/ld\+json
