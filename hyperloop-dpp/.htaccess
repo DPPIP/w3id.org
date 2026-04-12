@@ -1,19 +1,17 @@
 Options -MultiViews
 RewriteEngine on
 
-# JSON-LD content negotiation: SN-xxx -> passports/SN-xxx.jsonld
+# ── Segment SGTIN: /01/[GTIN]/21/[SN] ────────────────────────────────────────
 RewriteCond %{HTTP_ACCEPT} application/ld\+json
-RewriteRule ^(SN-[0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$1.jsonld [R=303,L]
+RewriteRule ^01/([0-9]{14})/21/([0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/$2.jsonld [R=303,L]
 
-# HTML: SN-xxx -> viewer.html?sn=SN-xxx (kein statisches HTML nötig)
-RewriteRule ^(SN-[0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/viewer.html?sn=$1 [R=303,L]
+RewriteRule ^01/([0-9]{14})/21/([0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/passports/viewer.html?sn=$2 [R=303,L,QSA]
 
-# JSON-LD content negotiation: LOT-xxx -> batch/LOT-xxx.jsonld
+# ── Batch LGTIN: /01/[GTIN]/10/[LOT] ─────────────────────────────────────────
 RewriteCond %{HTTP_ACCEPT} application/ld\+json
-RewriteRule ^(LOT-[A-Za-z0-9-]+)$ https://DPPIP.github.io/DPP-EUROTUBE/batch/$1.jsonld [R=303,L]
+RewriteRule ^01/([0-9]{14})/10/([0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/batch/$2.jsonld [R=303,L]
 
-# HTML: LOT-xxx -> batch/index.html?batch=LOT-xxx
-RewriteRule ^(LOT-[A-Za-z0-9-]+)$ https://DPPIP.github.io/DPP-EUROTUBE/batch/index.html?batch=$1 [R=303,L]
+RewriteRule ^01/([0-9]{14})/10/([0-9]+)$ https://DPPIP.github.io/DPP-EUROTUBE/batch/index.html?batch=$2 [R=303,L,QSA]
 
-# Fallback: redirect to main page
+# ── Fallback ──────────────────────────────────────────────────────────────────
 RewriteRule ^$ https://DPPIP.github.io/DPP-EUROTUBE/ [R=303,L]
